@@ -1,7 +1,10 @@
 import { useState } from "react";
 import axios from "axios";
 
+import { useNavigate } from "react-router-dom";
+
 export function PostNewPets() {
+  const navigate = useNavigate();
   const [form, setForm] = useState({
     name: "",
     species: "",
@@ -16,7 +19,7 @@ export function PostNewPets() {
     console.log(form);
   }
 
-  function handleSubmit(event) {
+  async function handleSubmit(event) {
     event.preventDefault();
 
     for (let key in form) {
@@ -26,8 +29,12 @@ export function PostNewPets() {
       }
     }
 
-    console.log("Nao caiu no if");
-    axios.post("https://ironrest.herokuapp.com/catchapet", form);
+    try {
+      await axios.post("https://ironrest.herokuapp.com/catchapet", form);
+      navigate(`/pets/${form.species.toLowerCase()}`);
+    } catch (error) {
+      console.error(error);
+    }
   }
 
   return (

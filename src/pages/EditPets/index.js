@@ -1,15 +1,17 @@
-import { useEffect, useState } from "react";
+import { useState } from "react";
 import axios from "axios";
-import { useParams } from "react-router-dom";
+import { useParams, useNavigate } from "react-router-dom";
+import { useEffect } from "react";
 
 export function EditPets() {
   const params = useParams();
+  const navigate = useNavigate();
 
   const [form, setForm] = useState({
     name: "",
     species: "",
     gender: "",
-    age: "",
+    age: null,
     favoriteToy: "",
     img: "",
   });
@@ -20,12 +22,13 @@ export function EditPets() {
         const response = await axios.get(
           `https://ironrest.herokuapp.com/catchapet/${params.id}`
         );
-
+        console.log(response);
         setForm({ ...response.data });
       } catch (error) {
         console.error(error);
       }
     }
+
     fetchPet();
   }, [params.id]);
 
@@ -44,8 +47,13 @@ export function EditPets() {
       }
     }
 
-    delete form._id; //SEMPRE REMOVA O ID QUANDO FOR EDITAR !!
-    axios.put(`https://ironrest.herokuapp.com/catchapet/${params.id}`, form);
+    delete form._id;
+    axios
+      .put(`https://ironrest.herokuapp.com/catchapet/${params.id}`, form)
+      .then((result) => navigate(`/pets/${form.species.toLowerCase()}`))
+      .catch((error) => {
+        console.error(error);
+      });
   }
 
   return (
@@ -58,6 +66,7 @@ export function EditPets() {
         value={form.name}
         onChange={handleChange}
       />
+
       <p>Especie:</p>
       <label htmlFor="dog">Cão</label>
       <input
@@ -77,6 +86,7 @@ export function EditPets() {
         type="radio"
         onChange={handleChange}
       />
+
       <p>Genero:</p>
       <label htmlFor="male">Male</label>
       <input

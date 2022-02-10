@@ -1,6 +1,17 @@
 import { Link } from "react-router-dom";
+import axios from "axios";
 
 export function Cards(props) {
+  async function handleDelete() {
+    try {
+      await axios.delete(
+        `https://ironrest.herokuapp.com/catchapet/${props.id}`
+      );
+      props.setRerender(true);
+    } catch (error) {
+      console.error(error);
+    }
+  }
   return (
     <>
       <div className="card" style={{ width: "18rem" }}>
@@ -26,6 +37,9 @@ export function Cards(props) {
           <Link to={`/editar-pet/${props.id}`}>
             <button type="button">Editar Pet</button>
           </Link>
+          <button type="button" onClick={handleDelete}>
+            Remover Pet
+          </button>
         </div>
       </div>
     </>

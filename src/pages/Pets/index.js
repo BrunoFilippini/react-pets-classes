@@ -1,11 +1,12 @@
-import axios from "axios";
 import { Cards } from "../../components/Cards";
 import { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
+import axios from "axios";
 
 export function Pets() {
   const params = useParams();
   const [pet, setPets] = useState([]);
+  const [rerender, setRereder] = useState(true);
 
   useEffect(() => {
     async function fetchPets() {
@@ -18,8 +19,10 @@ export function Pets() {
         console.error(error);
       }
     }
+
     fetchPets();
-  }, []);
+    setRereder(false);
+  }, [rerender]);
 
   return (
     <>
@@ -31,9 +34,10 @@ export function Pets() {
           return (
             <Cards
               key={currentPet._id}
+              setRerender={setRereder}
               id={currentPet._id}
-              name={currentPet.name}
               species={currentPet.species}
+              name={currentPet.name}
               gender={currentPet.gender}
               age={currentPet.age}
               favoriteToy={currentPet.favoriteToy}
