@@ -30,6 +30,8 @@ export function Pets() {
         .map((currentPet) => {
           return (
             <Cards
+              key={currentPet._id}
+              id={currentPet._id}
               name={currentPet.name}
               species={currentPet.species}
               gender={currentPet.gender}

@@ -1,3 +1,5 @@
+import { Link } from "react-router-dom";
+
 export function Cards(props) {
   return (
     <>
@@ -21,6 +23,9 @@ export function Cards(props) {
             <span className="fw-bold">Favorite Toy: </span>
             {props.favoriteToy}
           </p>
+          <Link to={`/editar-pet/${props.id}`}>
+            <button type="button">Editar Pet</button>
+          </Link>
         </div>
       </div>
     </>

@@ -32,9 +32,14 @@ export function Navbar() {
                 </Link>
               </li>
               <li className="nav-item">
-                {/*      <Link className="nav-link" href="#">
+                <Link className="nav-link" to="/cadastro-pets">
+                  Cadastre um Pet
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link className="nav-link" to="/Contact">
                   Fale Conosco
-                </Link> */}
+                </Link>
               </li>
             </ul>
           </div>
